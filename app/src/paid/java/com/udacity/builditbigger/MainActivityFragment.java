@@ -16,7 +16,7 @@ import com.udacity.jokedisplaysupport.JokeDisplayActivity;
  */
 public class MainActivityFragment extends Fragment implements View.OnClickListener, JokeFetchListener {
 
-    private ProgressBar progressBar;
+    private ProgressBar mProgressBar;
 
     public MainActivityFragment() {
     }
@@ -26,10 +26,9 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
-        Button btnJoke = (Button) root.findViewById(R.id.btn_joke);
-        btnJoke.setOnClickListener(this);
+        root.findViewById(R.id.btn_joke).setOnClickListener(this);
 
-        progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
+        mProgressBar = (ProgressBar) root.findViewById(R.id.progressBar);
 
         return root;
     }
@@ -45,12 +44,12 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onJokeFetched(String joke) {
-        progressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
         startActivity(JokeDisplayActivity.getJokeDisplayActivityIntent(getActivity(), joke));
     }
 
     private void fetchJoke() {
-        progressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
         new EndpointsAsyncTask(this).execute();
     }
 }

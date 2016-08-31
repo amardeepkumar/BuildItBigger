@@ -14,7 +14,7 @@ import java.io.IOException;
  * Created by Amardeep Kumar on 8/27/2016.
  */
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
-    private static MyApi myApiService = null;
+    private static MyApi myApiService;
     private JokeFetchListener mListener;
 
     public EndpointsAsyncTask(JokeFetchListener listener) {

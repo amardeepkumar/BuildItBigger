@@ -14,15 +14,14 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.udacity.jokedisplaysupport.JokeDisplayActivity;
 
+
 /**
  * Created by Amardeep Kumar on 8/27/2016.
  */
 public class MainActivityFragment extends Fragment implements View.OnClickListener, JokeFetchListener {
     private InterstitialAd mInterstitialAd;
-    private AdRequest adRequest;
-
-    private Button btnJoke;
-    private ProgressBar progressBar;
+    private AdRequest mAdRequest;
+    private ProgressBar mProgressBar;
 
     public MainActivityFragment() {
     }
@@ -31,10 +30,9 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
-        btnJoke = (Button) root.findViewById(R.id.btn_joke);
-        btnJoke.setOnClickListener(this);
+        root.findViewById(R.id.btn_joke).setOnClickListener(this);
 
-        progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
+        mProgressBar = (ProgressBar) root.findViewById(R.id.progressBar);
 
         mInterstitialAd = new InterstitialAd(getActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_unit_id));
@@ -42,7 +40,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         requestNewInterstitial();
 
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(mAdRequest);
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -66,16 +64,16 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     @Override
     public void onJokeFetched(String joke) {
         if (getActivity() != null) {
-            progressBar.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
             startActivity(JokeDisplayActivity.getJokeDisplayActivityIntent(getActivity(), joke));
         }
     }
 
     private void requestNewInterstitial() {
-        adRequest = new AdRequest.Builder()
+        mAdRequest = new AdRequest.Builder()
                 .addTestDevice("3288260347D6377A7FDC59C188ACEA78")
                 .build();
-        mInterstitialAd.loadAd(adRequest);
+        mInterstitialAd.loadAd(mAdRequest);
     }
 
     private void showAd() {
@@ -83,7 +81,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     }
 
     private void fetchJoke() {
-        progressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
         new EndpointsAsyncTask(this).execute();
     }
 }
