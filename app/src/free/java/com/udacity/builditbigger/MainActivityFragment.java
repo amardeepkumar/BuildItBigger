@@ -65,8 +65,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onJokeFetched(String joke) {
-        progressBar.setVisibility(View.GONE);
-        startActivity(JokeDisplayActivity.getJokeDisplayActivityIntent(getActivity(), joke));
+        if (getActivity() != null) {
+            progressBar.setVisibility(View.GONE);
+            startActivity(JokeDisplayActivity.getJokeDisplayActivityIntent(getActivity(), joke));
+        }
     }
 
     private void requestNewInterstitial() {
